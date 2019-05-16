@@ -1,0 +1,199 @@
+#!/usr/bin/env python
+
+
+import sys
+from time import time, gmtime, strftime
+
+import boto3
+
+from pyspark import SparkContext
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import date_format, to_timestamp
+
+
+import hashlib
+from boto3.dynamodb.conditions import Key
+from pyspark.sql.functions import udf
+from botocore.client import ClientError
+from pyspark.sql.utils import AnalysisException
+from pyspark.sql import Row
+
+DYNAMO_TABLE_PERMISSION  = "permission"
+DYNAMO_TABLE_BLACK_LIST  = "black-list"
+SIMPLE_SALT = "Some Salt"
+
+hash_udf = udf(lambda s: hashlib.md5(s + SIMPLE_SALT).hexdigest())
+
+hash_udf_number = udf(lambda s: int(hashlib.sha1(s + SIMPLE_SALT).hexdigest(), 16) )
+
+def is_column_type_string(column, df):
+    for data_type in df.dtypes:
+        if data_type[0] == column:
+            if data_type[1] == 'string':
+                return True
+            else:
+                return False
+
+
+
+def mask_cols(col_names):
+    def inner(df):
+        for col_name in col_names:
+            if is_column_type_string(col_name, df):
+                df = df.withColumn(col_name, hash_udf(col_name))
+            else:
+                df = df.withColumn(col_name, df[col_name].cast("String"))
+                df = df.withColumn(col_name, hash_udf_number(col_name))
+        return df
+    return inner
+
+
+def bucket_doesnt_exist(s3_path):
+    try:
+        path_parts=s3_path.replace("s3://","").split("/")
+        bucket=path_parts.pop(0)
+        s3 = boto3.resource('s3')
+        s3.meta.client.head_bucket(Bucket=bucket)
+        return False
+    except:
+        return True
+
+
+def database_doesnt_exist(spark, database_name):
+    dbs = spark.catalog.listDatabases()
+    for database in dbs:
+        if database.name == database_name:
+            return False
+    return True
+
+
+def table_doesnt_exist(spark, database_name, table_name):
+    tbs = spark.catalog.listTables(database_name)
+    for table in tbs:
+        if table.name == table_name:
+            return False
+    return True
+
+
+def validate_table_to_save(spark, group_db, group_table_name, s3_group_analitics_path):
+    is_ok_to_save_table = True
+    if bucket_doesnt_exist(s3_group_analitics_path):
+        is_ok_to_save_table = False
+        print("Analitic table {} failed to be persisted!".format(group_table_name))
+        print("The bucket {} does not exist!".format(s3_group_analitics_path))
+    if database_doesnt_exist(spark, group_db):
+        is_ok_to_save_table = False
+        print("Analitic table {} failed to be persisted!".format(group_table_name))
+        print("Database {} does not exist!".format(group_db))
+    if table_doesnt_exist(spark, group_db, group_table_name):
+        is_ok_to_save_table = False
+        print("Analitic table {} failed to be persisted!".format(group_table_name))
+        print("Table {} does not exist!".format(group_table_name))
+    return is_ok_to_save_table
+
+
+def column_exists_in_df(df, col):
+    try:
+        df[col]
+        return True
+    except AnalysisException:
+        return False
+
+
+def drop_cols_names(col_names, df):
+    return df.drop(*col_names)
+
+
+def get_table_from_dynamo(full_table_name, dynamo_table):
+    try:
+        dynamodb_client = boto3.resource('dynamodb')
+        table = dynamodb_client.Table(dynamo_table)
+        response = table.query(
+            KeyConditionExpression=Key('table_name').eq(full_table_name)
+        )
+    except :
+        return {}
+    return response['Items']
+
+
+def black_list(full_table_name, df):
+    response = get_table_from_dynamo(full_table_name, DYNAMO_TABLE_BLACK_LIST)
+    if not response:
+        return df
+    str_filter = ""
+    i = 0
+    while i < len(response):
+        item_columns = response[i]['item_columns']
+        str_filter = str_filter + get_filter_item(full_table_name, item_columns,df)
+        is_not_last_item = i != len(response) - 1
+        if is_not_last_item:
+            str_filter = str_filter + " or "
+        i += 1
+    black_list_df = df.filter(str_filter)
+    column_names = get_column_names(response[0]['item_columns'])
+    array_join = get_array_join(column_names, df, black_list_df)
+    return df.join(black_list_df, array_join,  how='left_anti')
+
+
+def get_column_names(item_columns):
+    column_names = []
+    for column in item_columns:
+        column_names.append(column['column_name'])
+    return column_names
+
+
+def get_array_join(column_names, source_df, black_list_df):
+    array_join = []
+    for column_name in column_names:
+        array_join.append(source_df[column_name] == black_list_df[column_name])
+    return array_join
+
+
+def get_filter_item(full_table_name, item_columns, df):
+    i = 0
+    is_all_columns_valid = True
+    str_filter = ""
+    while i < len(item_columns):
+        if column_exists_in_df(df, item_columns[i]['column_name']):
+            is_number = item_columns[i]['column_type'] != "string"
+            if is_number:
+                str_filter = str_filter + " " + item_columns[i]['column_name'] + " = " + item_columns[i]['column_value']
+            else:
+                str_filter = str_filter + " " + item_columns[i]['column_name'] + " = '" + item_columns[i]['column_value'] + "'"
+            is_not_last_column = i != len(item_columns) - 1
+            if is_not_last_column:
+                str_filter = str_filter + " and "
+        else:
+            print("Dynamodb table {} has invalid entry entries for table_name {}".format(DYNAMO_TABLE_BLACK_LIST, full_table_name))
+            print("Column {} does not exist in table {}".format(item_columns[i]['column_name'],full_table_name))
+            is_all_columns_valid = False
+        i += 1
+    if is_all_columns_valid:
+        str_filter = "( " +  str_filter  + " )"
+    return str_filter
+
+
+def get_derived_s3_path(s3_path, group_name):
+    path_parts=s3_path.replace("s3://","").split("/")
+    bucket=path_parts.pop(0)
+    path="/".join(path_parts)
+    return "s3://{}-{}/{}".format(bucket, group_name, path)
+
+
+def get_secured_dfs(full_table_name, df,filter_out_black_list=True):
+    response = get_table_from_dynamo(full_table_name, DYNAMO_TABLE_PERMISSION)
+    dict = {}
+    for item in response:
+        group_name = item['group_name'].lower()
+        if filter_out_black_list:
+            print("filter_out_black_list")
+            df_final_derived = black_list(full_table_name, df)
+        else:
+            df_final_derived = df
+            print("not filter black_list")
+        if 'masked_cols' in item:
+            df_final_derived = mask_cols(item['masked_cols'])(df_final_derived)
+        if 'excluded_cols' in item:
+            df_final_derived = drop_cols_names(item['excluded_cols'], df_final_derived)
+        dict[group_name] = df_final_derived
+    return dict
