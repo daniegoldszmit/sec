@@ -1,0 +1,12 @@
+{
+	"name": "AzureSearchIndex1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSearch1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSearchIndex",
+		"schema": []
+	}
+}

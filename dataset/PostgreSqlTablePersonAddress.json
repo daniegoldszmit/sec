@@ -1,0 +1,16 @@
+{
+	"name": "PostgreSqlTablePersonAddress",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PostgreSqlOnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "PostgreSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "person",
+			"table": "address"
+		}
+	}
+}
