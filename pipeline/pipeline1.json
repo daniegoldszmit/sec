@@ -21,7 +21,7 @@
 					"sink": {
 						"type": "AzureSearchIndexSink",
 						"writeBatchSize": 1000,
-						"writeBehavior": "merge"
+						"writeBehavior": "upload"
 					},
 					"enableStaging": false,
 					"translator": {
