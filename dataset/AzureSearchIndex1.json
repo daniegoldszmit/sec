@@ -7,6 +7,9 @@
 		},
 		"annotations": [],
 		"type": "AzureSearchIndex",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"indexName": "address-idx"
+		}
 	}
 }
