@@ -9,7 +9,7 @@
 		"type": "AzureSearchIndex",
 		"schema": [],
 		"typeProperties": {
-			"indexName": "address-idx"
+			"indexName": "address"
 		}
 	}
 }
