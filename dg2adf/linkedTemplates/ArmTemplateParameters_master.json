@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "dg2adf"
+		},
+		"AzureSearch1_key": {
+			"value": ""
+		},
+		"PostgreSqlOnPrem_connectionString": {
+			"value": ""
+		},
+		"AzureSearch1_properties_typeProperties_url": {
+			"value": "https://dgcognitivesearch.search.windows.net"
+		},
+		"integrationRuntime1_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/d0a8fb40-72fd-484a-94e2-aff6d4a1b810/resourcegroups/dg-resourcegroup/providers/Microsoft.DataFactory/factories/dgdatafactory2020/integrationruntimes/integrationRuntime1"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

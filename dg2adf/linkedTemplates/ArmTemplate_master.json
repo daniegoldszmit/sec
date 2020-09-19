@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "dg2adf"
+		},
+		"AzureSearch1_key": {
+			"type": "secureString",
+			"metadata": "Secure string for 'key' of 'AzureSearch1'"
+		},
+		"PostgreSqlOnPrem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PostgreSqlOnPrem'"
+		},
+		"AzureSearch1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://dgcognitivesearch.search.windows.net"
+		},
+		"integrationRuntime1_properties_typeProperties_linkedInfo_resourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/d0a8fb40-72fd-484a-94e2-aff6d4a1b810/resourcegroups/dg-resourcegroup/providers/Microsoft.DataFactory/factories/dgdatafactory2020/integrationruntimes/integrationRuntime1"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "dg2adf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureSearch1_key": {
+						"value": "[parameters('AzureSearch1_key')]"
+					},
+					"PostgreSqlOnPrem_connectionString": {
+						"value": "[parameters('PostgreSqlOnPrem_connectionString')]"
+					},
+					"AzureSearch1_properties_typeProperties_url": {
+						"value": "[parameters('AzureSearch1_properties_typeProperties_url')]"
+					},
+					"integrationRuntime1_properties_typeProperties_linkedInfo_resourceId": {
+						"value": "[parameters('integrationRuntime1_properties_typeProperties_linkedInfo_resourceId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
