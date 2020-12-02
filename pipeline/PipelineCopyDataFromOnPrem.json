@@ -3,50 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy to Azure Search",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "PostgreSqlSource"
-					},
-					"sink": {
-						"type": "AzureSearchIndexSink",
-						"writeBatchSize": 1000,
-						"writeBehavior": "upload"
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "PostgreSqlTablePersonAddress",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "AzureSearchIndex1",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Copy Orders to DataLake Raw Data",
 				"type": "Copy",
 				"dependsOn": [],
