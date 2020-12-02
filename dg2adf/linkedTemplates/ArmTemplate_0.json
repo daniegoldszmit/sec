@@ -11,9 +11,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'key' of 'AzureSearch1'"
 		},
-		"PostgreSqlOnPrem_connectionString": {
+		"LinkedServiceDatalake_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'PostgreSqlOnPrem'"
+			"metadata": "Secure string for 'connectionString' of 'LinkedServiceDatalake'"
+		},
+		"LinkedServiceSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LinkedServiceSqlServer'"
+		},
+		"LinkedServiceFileServerOnPrem_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LinkedServiceFileServerOnPrem'"
 		},
 		"PostgreSqlOnPrem2_connectionString": {
 			"type": "secureString",
@@ -26,6 +34,14 @@
 		"integrationRuntime1_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/d0a8fb40-72fd-484a-94e2-aff6d4a1b810/resourcegroups/dg-resourcegroup/providers/Microsoft.DataFactory/factories/dgdatafactory2020/integrationruntimes/integrationRuntime1"
+		},
+		"LinkedServiceFileServerOnPrem_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\data\\Northwind"
+		},
+		"LinkedServiceFileServerOnPrem_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "usr_datafactory"
 		}
 	},
 	"variables": {
@@ -50,6 +66,32 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/LinkedServiceDatalake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LinkedServiceDatalake_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LinkedServiceSqlServer')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('LinkedServiceSqlServer_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -65,13 +107,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/default')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime2')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -79,6 +114,13 @@
 				"type": "SelfHosted",
 				"typeProperties": {}
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
 			"dependsOn": []
 		},
 		{
@@ -102,22 +144,52 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PostgreSqlOnPrem')]",
+			"name": "[concat(parameters('factoryName'), '/Dataset_Orders_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "Northwind",
+						"container": "datalake-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LinkedServiceFileServerOnPrem')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "PostgreSql",
+				"type": "FileServer",
 				"typeProperties": {
-					"connectionString": "[parameters('PostgreSqlOnPrem_connectionString')]"
+					"host": "[parameters('LinkedServiceFileServerOnPrem_properties_typeProperties_host')]",
+					"userId": "[parameters('LinkedServiceFileServerOnPrem_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('LinkedServiceFileServerOnPrem_password')]"
+					}
 				},
 				"connectVia": {
-					"referenceName": "integrationRuntime1",
+					"referenceName": "integrationRuntime2",
 					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
 			]
 		},
 		{
@@ -137,6 +209,94 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataset_Orders_dbf')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceFileServerOnPrem",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "orders.csv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "String"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "String"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "String"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "String"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "String"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "String"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "String"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "String"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "String"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "String"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "String"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "String"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "String"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "String"
+					},
+					{
+						"name": "_NULLFLAGS",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceFileServerOnPrem')]"
 			]
 		},
 		{
@@ -161,13 +321,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"name": "[concat(parameters('factoryName'), '/PipelineCopyDataFromOnPrem')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "Copy to Azure Search",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -211,13 +371,242 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Copy Orders to DataLake Raw Data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ORDERID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ORDERID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMERID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CUSTOMERID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "EMPLOYEEID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "EMPLOYEEID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ORDERDATE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ORDERDATE",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "REQUIREDDA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "REQUIREDDA",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPPEDDAT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPPEDDAT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPVIA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPVIA",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FREIGHT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FREIGHT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPNAME",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPNAME",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPADDRES",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPADDRES",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPCITY",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPCITY",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPREGION",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPREGION",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPPOSTAL",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPPOSTAL",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPCOUNTR",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SHIPCOUNTR",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Dataset_Orders_dbf",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dataset_Orders_Datalake",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PostgreSqlTablePersonAddress')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSearchIndex1')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSearchIndex1')]",
+				"[concat(variables('factoryId'), '/datasets/Dataset_Orders_dbf')]",
+				"[concat(variables('factoryId'), '/datasets/Dataset_Orders_Datalake')]"
 			]
 		}
 	]

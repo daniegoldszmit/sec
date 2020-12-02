@@ -11,9 +11,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'key' of 'AzureSearch1'"
 		},
-		"PostgreSqlOnPrem_connectionString": {
+		"LinkedServiceDatalake_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'PostgreSqlOnPrem'"
+			"metadata": "Secure string for 'connectionString' of 'LinkedServiceDatalake'"
+		},
+		"LinkedServiceFileServerOnPrem_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LinkedServiceFileServerOnPrem'"
+		},
+		"LinkedServiceSqlServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LinkedServiceSqlServer'"
 		},
 		"PostgreSqlOnPrem2_connectionString": {
 			"type": "secureString",
@@ -22,6 +30,14 @@
 		"AzureSearch1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dgcognitivesearch.search.windows.net"
+		},
+		"LinkedServiceFileServerOnPrem_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\data\\Northwind"
+		},
+		"LinkedServiceFileServerOnPrem_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "usr_datafactory"
 		},
 		"integrationRuntime1_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
@@ -57,8 +73,14 @@
 					"AzureSearch1_key": {
 						"value": "[parameters('AzureSearch1_key')]"
 					},
-					"PostgreSqlOnPrem_connectionString": {
-						"value": "[parameters('PostgreSqlOnPrem_connectionString')]"
+					"LinkedServiceDatalake_connectionString": {
+						"value": "[parameters('LinkedServiceDatalake_connectionString')]"
+					},
+					"LinkedServiceSqlServer_connectionString": {
+						"value": "[parameters('LinkedServiceSqlServer_connectionString')]"
+					},
+					"LinkedServiceFileServerOnPrem_password": {
+						"value": "[parameters('LinkedServiceFileServerOnPrem_password')]"
 					},
 					"PostgreSqlOnPrem2_connectionString": {
 						"value": "[parameters('PostgreSqlOnPrem2_connectionString')]"
@@ -68,6 +90,12 @@
 					},
 					"integrationRuntime1_properties_typeProperties_linkedInfo_resourceId": {
 						"value": "[parameters('integrationRuntime1_properties_typeProperties_linkedInfo_resourceId')]"
+					},
+					"LinkedServiceFileServerOnPrem_properties_typeProperties_host": {
+						"value": "[parameters('LinkedServiceFileServerOnPrem_properties_typeProperties_host')]"
+					},
+					"LinkedServiceFileServerOnPrem_properties_typeProperties_userId": {
+						"value": "[parameters('LinkedServiceFileServerOnPrem_properties_typeProperties_userId')]"
 					}
 				}
 			},
