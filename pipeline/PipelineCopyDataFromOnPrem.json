@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "PipelineCopyDataFromOnPrem",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy to Azure Search",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -42,6 +42,231 @@
 				"outputs": [
 					{
 						"referenceName": "AzureSearchIndex1",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy Orders to DataLake Raw Data",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ORDERID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ORDERID",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMERID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CUSTOMERID",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "EMPLOYEEID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "EMPLOYEEID",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "ORDERDATE",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ORDERDATE",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "REQUIREDDA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "REQUIREDDA",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPPEDDAT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPPEDDAT",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPVIA",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPVIA",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "FREIGHT",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "FREIGHT",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPNAME",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPNAME",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPADDRES",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPADDRES",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPCITY",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPCITY",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPREGION",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPREGION",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPPOSTAL",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPPOSTAL",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPCOUNTR",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SHIPCOUNTR",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Dataset_Orders_dbf",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dataset_Orders_Datalake",
 						"type": "DatasetReference"
 					}
 				]

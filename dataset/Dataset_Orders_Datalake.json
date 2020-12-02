@@ -1,0 +1,20 @@
+{
+	"name": "Dataset_Orders_Datalake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LinkedServiceDatalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Northwind",
+				"container": "datalake-raw-data"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

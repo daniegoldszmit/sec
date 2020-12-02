@@ -19,48 +19,63 @@
 		},
 		"schema": [
 			{
+				"name": "ORDERID",
 				"type": "String"
 			},
 			{
+				"name": "CUSTOMERID",
 				"type": "String"
 			},
 			{
+				"name": "EMPLOYEEID",
 				"type": "String"
 			},
 			{
+				"name": "ORDERDATE",
 				"type": "String"
 			},
 			{
+				"name": "REQUIREDDA",
 				"type": "String"
 			},
 			{
+				"name": "SHIPPEDDAT",
 				"type": "String"
 			},
 			{
+				"name": "SHIPVIA",
 				"type": "String"
 			},
 			{
+				"name": "FREIGHT",
 				"type": "String"
 			},
 			{
+				"name": "SHIPNAME",
 				"type": "String"
 			},
 			{
+				"name": "SHIPADDRES",
 				"type": "String"
 			},
 			{
+				"name": "SHIPCITY",
 				"type": "String"
 			},
 			{
+				"name": "SHIPREGION",
 				"type": "String"
 			},
 			{
+				"name": "SHIPPOSTAL",
 				"type": "String"
 			},
 			{
+				"name": "SHIPCOUNTR",
 				"type": "String"
 			},
 			{
+				"name": "_NULLFLAGS",
 				"type": "String"
 			}
 		]
