@@ -1,5 +1,5 @@
 {
-	"name": "PostgreSqlTablePersonAddress",
+	"name": "Dataset_AdventureWorks_Address_postgresql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "PostgreSqlOnPrem2",

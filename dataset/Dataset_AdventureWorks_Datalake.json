@@ -1,5 +1,5 @@
 {
-	"name": "Dataset_Northwind_Datalake",
+	"name": "Dataset_AdventureWorks_Datalake",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LinkedServiceDatalake",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Northwind",
+				"folderPath": "AdventureWorks",
 				"container": "datalake-raw-data"
 			},
 			"compressionCodec": "snappy"

@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Orders to DataLake Raw Data",
+				"name": "Copy Northwind Orders to DataLake Raw Data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -216,13 +216,162 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Dataset_Orders_dbf",
+						"referenceName": "Dataset_Northwind_Orders_dbf",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Dataset_Orders_Datalake",
+						"referenceName": "Dataset_Northwind_Datalake",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy AdventureWorks Addres to DataLake",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlSource"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "addressid",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "addressid",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "addressline1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "addressline1",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "addressline2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "addressline2",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "city",
+									"type": "String"
+								},
+								"sink": {
+									"name": "city",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "stateprovinceid",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "stateprovinceid",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "postalcode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "postalcode",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "spatiallocation",
+									"type": "String"
+								},
+								"sink": {
+									"name": "spatiallocation",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "rowguid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "rowguid",
+									"type": "Guid",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "modifieddate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifieddate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Dataset_AdventureWorks_Address_postgresql",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dataset_AdventureWorks_Datalake",
 						"type": "DatasetReference"
 					}
 				]
