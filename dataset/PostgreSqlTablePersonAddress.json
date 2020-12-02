@@ -2,7 +2,7 @@
 	"name": "PostgreSqlTablePersonAddress",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "PostgreSqlOnPrem",
+			"referenceName": "PostgreSqlOnPrem2",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
