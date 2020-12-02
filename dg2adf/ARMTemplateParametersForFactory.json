@@ -11,6 +11,9 @@
 		"PostgreSqlOnPrem_connectionString": {
 			"value": ""
 		},
+		"PostgreSqlOnPrem2_connectionString": {
+			"value": ""
+		},
 		"AzureSearch1_properties_typeProperties_url": {
 			"value": "https://dgcognitivesearch.search.windows.net"
 		},

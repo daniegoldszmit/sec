@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'PostgreSqlOnPrem'"
 		},
+		"PostgreSqlOnPrem2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PostgreSqlOnPrem2'"
+		},
 		"AzureSearch1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://dgcognitivesearch.search.windows.net"
@@ -55,6 +59,9 @@
 					},
 					"PostgreSqlOnPrem_connectionString": {
 						"value": "[parameters('PostgreSqlOnPrem_connectionString')]"
+					},
+					"PostgreSqlOnPrem2_connectionString": {
+						"value": "[parameters('PostgreSqlOnPrem2_connectionString')]"
 					},
 					"AzureSearch1_properties_typeProperties_url": {
 						"value": "[parameters('AzureSearch1_properties_typeProperties_url')]"
