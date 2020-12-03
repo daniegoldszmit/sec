@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "address.parquet",
 				"folderPath": "address",
 				"container": "datalake-adventureworks-raw-data"
 			},

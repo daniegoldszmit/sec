@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "orders.parquet",
-				"folderPath": "Northwind",
-				"container": "datalake-raw-data"
+				"fileName": "order.parquet",
+				"folderPath": "orders",
+				"container": "datalake-northwind-raw-data"
 			},
 			"compressionCodec": "snappy"
 		},
