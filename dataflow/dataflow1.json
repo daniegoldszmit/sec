@@ -1,0 +1,27 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Dataset_Northwind_Orders_Datalake",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~> source1\nDerivedColumn1 select(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nsource1 derive(ORDERID = ERROR_FUNCTION('')) ~> DerivedColumn1"
+		}
+	}
+}
