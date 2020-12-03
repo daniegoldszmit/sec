@@ -1,5 +1,5 @@
 {
-	"name": "Dataset_Northwind_Orders_Datalake",
+	"name": "Northwind_Orders_Datalake",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LinkedServiceDatalake",

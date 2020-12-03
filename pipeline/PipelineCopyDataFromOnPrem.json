@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Northwind Orders to DataLake Raw Data",
+				"name": "Northwind Orders to DataLake Raw Data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -216,19 +216,19 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Dataset_Northwind_Orders_dbf",
+						"referenceName": "Northwind_Orders_dbf",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Dataset_Northwind_Datalake",
+						"referenceName": "Northwind_Datalake",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy AdventureWorks Addres to DataLake",
+				"name": "AdventureWorks Addres to DataLake",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -365,19 +365,19 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Dataset_AdventureWorks_Address_postgresql",
+						"referenceName": "AdventureWorks_Address_postgresql",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Dataset_AdventureWorks_Address_Datalake",
+						"referenceName": "AdventureWorks_Address_Datalake",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy AdventureWorks Customers to DataLake",
+				"name": "Northwind Customer  to DataLake",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -566,13 +566,206 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Dataset_Northwind_customers_dbf",
+						"referenceName": "Northwind_customers_dbf",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Dataset_Northwind_Customer_Datalake",
+						"referenceName": "Northwind_Customer_Datalake",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "AdventureWorks Person to DataLake",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlSource"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "businessentityid",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "businessentityid",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "persontype",
+									"type": "String"
+								},
+								"sink": {
+									"name": "persontype",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "namestyle",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "namestyle",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "title",
+									"type": "String"
+								},
+								"sink": {
+									"name": "title",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "firstname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "firstname",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "middlename",
+									"type": "String"
+								},
+								"sink": {
+									"name": "middlename",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "lastname",
+									"type": "String"
+								},
+								"sink": {
+									"name": "lastname",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "suffix",
+									"type": "String"
+								},
+								"sink": {
+									"name": "suffix",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "emailpromotion",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "emailpromotion",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "additionalcontactinfo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "additionalcontactinfo",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "demographics",
+									"type": "String"
+								},
+								"sink": {
+									"name": "demographics",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "rowguid",
+									"type": "Guid"
+								},
+								"sink": {
+									"name": "rowguid",
+									"type": "Guid",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "modifieddate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modifieddate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AdventureWorks_Person_postgresql",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AdventureWorks_Person_Datalake",
 						"type": "DatasetReference"
 					}
 				]

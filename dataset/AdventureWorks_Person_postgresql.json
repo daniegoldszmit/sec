@@ -1,5 +1,5 @@
 {
-	"name": "Dataset_AdventureWorks_Person_postgresql_copy1",
+	"name": "AdventureWorks_Person_postgresql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "PostgreSqlOnPrem2",

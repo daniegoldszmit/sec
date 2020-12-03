@@ -1,5 +1,5 @@
 {
-	"name": "Dataset_AdventureWorks_Person_Datalake",
+	"name": "AdventureWorks_Person_Datalake",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LinkedServiceDatalake",

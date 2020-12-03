@@ -1,5 +1,5 @@
 {
-	"name": "Dataset_Northwind_Orders_dbf",
+	"name": "Northwind_Orders_dbf",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LinkedServiceFileServerOnPrem",
