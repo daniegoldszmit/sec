@@ -222,7 +222,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Northwind_Customer_Datalake",
+						"referenceName": "Northwind_Orders_Datalake",
 						"type": "DatasetReference"
 					}
 				]
