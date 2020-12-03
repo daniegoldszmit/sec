@@ -1,0 +1,45 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Northwind_Orders_Datalake",
+						"type": "DatasetReference"
+					},
+					"name": "Orders"
+				},
+				{
+					"dataset": {
+						"referenceName": "Northwind_Customer_Datalake",
+						"type": "DatasetReference"
+					},
+					"name": "Customers"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Northwind_Customer_Orders_Datalake",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Join1"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['orders/*.parquet']) ~> Orders\nsource(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['customers/*.parquet']) ~> Customers\nDerivedColumn1, Customers join(Orders@ORDERID == Customers@ORDERID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 select(mapColumn(\n\t\tORDERID = Orders@ORDERID,\n\t\tCUSTOMERID = Orders@CUSTOMERID,\n\t\tSHIPNAME = Orders@SHIPNAME,\n\t\tSHIPADDRES = Orders@SHIPADDRES,\n\t\tSHIPCITY = Orders@SHIPCITY,\n\t\tSHIPREGION = Orders@SHIPREGION,\n\t\tSHIPPOSTAL = Orders@SHIPPOSTAL,\n\t\tSHIPCOUNTR = Orders@SHIPCOUNTR,\n\t\tORDERID = Customers@ORDERID,\n\t\tCUSTOMERID = Customers@CUSTOMERID,\n\t\tEMPLOYEEID = Customers@EMPLOYEEID,\n\t\tREQUIREDDA = Customers@REQUIREDDA,\n\t\tSHIPPEDDAT = Customers@SHIPPEDDAT,\n\t\tSHIPVIA = Customers@SHIPVIA,\n\t\tFREIGHT = Customers@FREIGHT,\n\t\tSHIPNAME = Customers@SHIPNAME,\n\t\tSHIPADDRES = Customers@SHIPADDRES,\n\t\tSHIPCITY = Customers@SHIPCITY,\n\t\tSHIPREGION = Customers@SHIPREGION,\n\t\tSHIPPOSTAL = Customers@SHIPPOSTAL,\n\t\tSHIPCOUNTR = Customers@SHIPCOUNTR\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nOrders derive(ORDERID = uuid()) ~> DerivedColumn1\nSelect1 sink(input(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+		}
+	}
+}
