@@ -1,0 +1,340 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "dg2adf"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Address_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "address.parquet",
+						"folderPath": "address",
+						"container": "datalake-adventureworks-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Northwind_Customer_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "customer.parquet",
+						"folderPath": "customers",
+						"container": "datalake-northwind-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Northwind_Orders_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "order.parquet",
+						"folderPath": "orders",
+						"container": "datalake-northwind-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Person_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "person.parquet",
+						"folderPath": "person",
+						"container": "datalake-adventureworks-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}
