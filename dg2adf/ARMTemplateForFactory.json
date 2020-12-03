@@ -844,47 +844,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSearchIndex1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSearch1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSearchIndex",
-				"schema": [],
-				"typeProperties": {
-					"indexName": "address"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSearch1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Address_postgresql')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "PostgreSqlOnPrem2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "person",
-					"table": "address"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Address_Datalake')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -968,6 +927,151 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Address_postgresql')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PostgreSqlOnPrem2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "PostgreSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "person",
+					"table": "address"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Person_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "person.parquet",
+						"folderPath": "person",
+						"container": "datalake-adventureworks-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Person_postgresql')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "PostgreSqlOnPrem2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "PostgreSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "person",
+					"table": "person"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSearchIndex1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSearch1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSearchIndex",
+				"schema": [],
+				"typeProperties": {
+					"indexName": "address"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSearch1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Northwind_Customer_Datalake')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -981,9 +1085,90 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "customer.parquet",
+						"fileName": "customers.parquet",
 						"folderPath": "customers",
 						"container": "datalake-northwind-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Northwind_Customer_Orders_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "datalake-northwind-staging"
 					},
 					"compressionCodec": "snappy"
 				},
@@ -1064,7 +1249,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "order.parquet",
+						"fileName": "orders.parquet",
 						"folderPath": "orders",
 						"container": "datalake-northwind-raw-data"
 					},
@@ -1423,117 +1608,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/default')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Person_Datalake')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LinkedServiceDatalake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "person.parquet",
-						"folderPath": "person",
-						"container": "datalake-adventureworks-raw-data"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "ORDERID",
-						"type": "UTF8"
-					},
-					{
-						"name": "CUSTOMERID",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMPLOYEEID",
-						"type": "UTF8"
-					},
-					{
-						"name": "ORDERDATE",
-						"type": "UTF8"
-					},
-					{
-						"name": "REQUIREDDA",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPPEDDAT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPVIA",
-						"type": "UTF8"
-					},
-					{
-						"name": "FREIGHT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPNAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPADDRES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPCITY",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPREGION",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPPOSTAL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPCOUNTR",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Person_postgresql')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "PostgreSqlOnPrem2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "person",
-					"table": "person"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1570,13 +1644,10 @@
 							"name": "Join1"
 						},
 						{
-							"name": "Select1"
-						},
-						{
 							"name": "DerivedColumn1"
 						}
 					],
-					"script": "source(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['orders/*.parquet']) ~> Orders\nsource(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['customers/*.parquet']) ~> Customers\nDerivedColumn1, Customers join(DerivedColumn1@ORDERID == Customers@ORDERID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 select(mapColumn(\n\t\tORDERID = Orders@ORDERID,\n\t\tCUSTOMERID = Orders@CUSTOMERID,\n\t\tSHIPNAME = Orders@SHIPNAME,\n\t\tSHIPADDRES = Orders@SHIPADDRES,\n\t\tSHIPCITY = Orders@SHIPCITY,\n\t\tSHIPREGION = Orders@SHIPREGION,\n\t\tSHIPPOSTAL = Orders@SHIPPOSTAL,\n\t\tSHIPCOUNTR = Orders@SHIPCOUNTR,\n\t\tORDERID = Customers@ORDERID,\n\t\tCUSTOMERID = Customers@CUSTOMERID,\n\t\tEMPLOYEEID = Customers@EMPLOYEEID,\n\t\tREQUIREDDA = Customers@REQUIREDDA,\n\t\tSHIPPEDDAT = Customers@SHIPPEDDAT,\n\t\tSHIPVIA = Customers@SHIPVIA,\n\t\tFREIGHT = Customers@FREIGHT,\n\t\tSHIPNAME = Customers@SHIPNAME,\n\t\tSHIPADDRES = Customers@SHIPADDRES,\n\t\tSHIPCITY = Customers@SHIPCITY,\n\t\tSHIPREGION = Customers@SHIPREGION,\n\t\tSHIPPOSTAL = Customers@SHIPPOSTAL,\n\t\tSHIPCOUNTR = Customers@SHIPCOUNTR\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nOrders derive(ORDERID = uuid()) ~> DerivedColumn1\nSelect1 sink(input(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+					"script": "source(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['orders/*.parquet']) ~> Orders\nsource(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['customers/*.parquet']) ~> Customers\nDerivedColumn1, Customers join(DerivedColumn1@ORDERID == Customers@ORDERID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nOrders derive(ORDERID = uuid()) ~> DerivedColumn1\nJoin1 sink(input(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 				}
 			},
 			"dependsOn": [
@@ -1586,85 +1657,11 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Northwind_Customer_Orders_Datalake')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LinkedServiceDatalake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "datalake-northwind-staging"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "ORDERID",
-						"type": "UTF8"
-					},
-					{
-						"name": "CUSTOMERID",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMPLOYEEID",
-						"type": "UTF8"
-					},
-					{
-						"name": "ORDERDATE",
-						"type": "UTF8"
-					},
-					{
-						"name": "REQUIREDDA",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPPEDDAT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPVIA",
-						"type": "UTF8"
-					},
-					{
-						"name": "FREIGHT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPNAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPADDRES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPCITY",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPREGION",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPPOSTAL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPCOUNTR",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
-			]
+			"properties": {},
+			"dependsOn": []
 		}
 	]
 }

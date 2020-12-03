@@ -1,0 +1,226 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "dg2adf"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Northwind_Customer_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "customers.parquet",
+						"folderPath": "customers",
+						"container": "datalake-northwind-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Northwind_Orders_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "orders.parquet",
+						"folderPath": "orders",
+						"container": "datalake-northwind-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Northwind_Orders_Datalake",
+								"type": "DatasetReference"
+							},
+							"name": "Orders"
+						},
+						{
+							"dataset": {
+								"referenceName": "Northwind_Customer_Datalake",
+								"type": "DatasetReference"
+							},
+							"name": "Customers"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Northwind_Customer_Orders_Datalake",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Join1"
+						},
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['orders/*.parquet']) ~> Orders\nsource(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['customers/*.parquet']) ~> Customers\nDerivedColumn1, Customers join(DerivedColumn1@ORDERID == Customers@ORDERID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nOrders derive(ORDERID = uuid()) ~> DerivedColumn1\nJoin1 sink(input(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Northwind_Orders_Datalake')]",
+				"[concat(variables('factoryId'), '/datasets/Northwind_Customer_Datalake')]"
+			]
+		}
+	]
+}
