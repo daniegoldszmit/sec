@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'key' of 'AzureSearch1'"
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
 		"LinkedServiceDatalake_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LinkedServiceDatalake'"
@@ -73,6 +77,9 @@
 					"AzureSearch1_key": {
 						"value": "[parameters('AzureSearch1_key')]"
 					},
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
 					"LinkedServiceDatalake_connectionString": {
 						"value": "[parameters('LinkedServiceDatalake_connectionString')]"
 					},
@@ -100,6 +107,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "dg2adf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'dg2adf_ArmTemplate_0')]"
+			]
 		}
 	]
 }

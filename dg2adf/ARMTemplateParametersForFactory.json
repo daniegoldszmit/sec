@@ -8,6 +8,9 @@
 		"AzureSearch1_key": {
 			"value": ""
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
 		"LinkedServiceDatalake_connectionString": {
 			"value": ""
 		},
