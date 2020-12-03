@@ -144,6 +144,171 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Dataset_AdventureWorks_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "AdventureWorks",
+						"container": "datalake-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataset_Northwind_Customer_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "customers.parquet",
+						"folderPath": "Northwind",
+						"container": "datalake-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Dataset_Northwind_Datalake')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -157,6 +322,89 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"folderPath": "Northwind",
+						"container": "datalake-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Dataset_Northwind_Orders_Datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LinkedServiceDatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "orders.parquet",
 						"folderPath": "Northwind",
 						"container": "datalake-raw-data"
 					},
@@ -269,85 +517,24 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dataset_AdventureWorks_Datalake')]",
+			"name": "[concat(parameters('factoryName'), '/Dataset_AdventureWorks_Address_postgresql')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "LinkedServiceDatalake",
+					"referenceName": "PostgreSqlOnPrem2",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Parquet",
+				"type": "PostgreSqlTable",
+				"schema": [],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "AdventureWorks",
-						"container": "datalake-raw-data"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "ORDERID",
-						"type": "UTF8"
-					},
-					{
-						"name": "CUSTOMERID",
-						"type": "UTF8"
-					},
-					{
-						"name": "EMPLOYEEID",
-						"type": "UTF8"
-					},
-					{
-						"name": "ORDERDATE",
-						"type": "UTF8"
-					},
-					{
-						"name": "REQUIREDDA",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPPEDDAT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPVIA",
-						"type": "UTF8"
-					},
-					{
-						"name": "FREIGHT",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPNAME",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPADDRES",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPCITY",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPREGION",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPPOSTAL",
-						"type": "UTF8"
-					},
-					{
-						"name": "SHIPCOUNTR",
-						"type": "UTF8"
-					}
-				]
+					"schema": "person",
+					"table": "address"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
+				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
 			]
 		},
 		{
@@ -440,24 +627,92 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Dataset_AdventureWorks_Address_postgresql')]",
+			"name": "[concat(parameters('factoryName'), '/Dataset_Northwind_customers_dbf')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "PostgreSqlOnPrem2",
+					"referenceName": "LinkedServiceFileServerOnPrem",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
+				"type": "DelimitedText",
 				"typeProperties": {
-					"schema": "person",
-					"table": "address"
-				}
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "customers.csv"
+					},
+					"columnDelimiter": ",",
+					"encodingName": "ISO-8859-1",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "String"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "String"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "String"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "String"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "String"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "String"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "String"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "String"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "String"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "String"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "String"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "String"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "String"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "String"
+					},
+					{
+						"name": "_NULLFLAGS",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceFileServerOnPrem')]"
 			]
 		},
 		{
@@ -843,6 +1098,209 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Copy AdventureWorks Customers to DataLake",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CUSTOMERID",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CUSTOMERID",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "COMPANYNAM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "COMPANYNAM",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CONTACTNAM",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CONTACTNAM",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CONTACTTIT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CONTACTTIT",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ADDRESS",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ADDRESS",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CITY",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CITY",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "REGION",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "REGION",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "POSTALCODE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "POSTALCODE",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "COUNTRY",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "COUNTRY",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "PHONE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PHONE",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "FAX",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FAX",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "_NULLFLAGS",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "_NULLFLAGS",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Dataset_Northwind_customers_dbf",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Dataset_Northwind_Customer_Datalake",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"annotations": []
@@ -851,7 +1309,9 @@
 				"[concat(variables('factoryId'), '/datasets/Dataset_Northwind_Orders_dbf')]",
 				"[concat(variables('factoryId'), '/datasets/Dataset_Northwind_Datalake')]",
 				"[concat(variables('factoryId'), '/datasets/Dataset_AdventureWorks_Address_postgresql')]",
-				"[concat(variables('factoryId'), '/datasets/Dataset_AdventureWorks_Datalake')]"
+				"[concat(variables('factoryId'), '/datasets/Dataset_AdventureWorks_Datalake')]",
+				"[concat(variables('factoryId'), '/datasets/Dataset_Northwind_customers_dbf')]",
+				"[concat(variables('factoryId'), '/datasets/Dataset_Northwind_Customer_Datalake')]"
 			]
 		}
 	]
