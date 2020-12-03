@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "customer.parquet",
+				"fileName": "customers.parquet",
 				"folderPath": "customers",
 				"container": "datalake-northwind-raw-data"
 			},
