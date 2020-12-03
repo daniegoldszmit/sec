@@ -1,0 +1,16 @@
+{
+	"name": "Dataset_AdventureWorks_Person_postgresql_copy1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PostgreSqlOnPrem2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "PostgreSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "person",
+			"table": "person"
+		}
+	}
+}

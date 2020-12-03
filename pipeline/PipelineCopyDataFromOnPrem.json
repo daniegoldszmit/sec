@@ -371,7 +371,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Dataset_AdventureWorks_Datalake",
+						"referenceName": "Dataset_AdventureWorks_Address_Datalake",
 						"type": "DatasetReference"
 					}
 				]
