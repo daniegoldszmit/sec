@@ -1,5 +1,5 @@
 {
-	"name": "Northwind_Customer_Orders_Datalake",
+	"name": "Northwind_Datalake_raw_data",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LinkedServiceDatalake",
