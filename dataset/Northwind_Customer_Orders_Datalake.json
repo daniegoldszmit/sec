@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "datalake-northwind-staging"
+				"container": "datalake-northwind-raw-data"
 			},
 			"compressionCodec": "snappy"
 		},
