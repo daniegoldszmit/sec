@@ -797,7 +797,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "Dataflow_Northwind",
 						"type": "DataFlowReference"
 					},
 					"compute": {
