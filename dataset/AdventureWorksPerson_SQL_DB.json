@@ -1,5 +1,5 @@
 {
-	"name": "AdventureWorksPerson",
+	"name": "AdventureWorksPerson_SQL_DB",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "address"
+			"table": "person"
 		}
 	}
 }
