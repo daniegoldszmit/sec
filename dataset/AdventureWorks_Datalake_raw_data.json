@@ -1,0 +1,76 @@
+{
+	"name": "AdventureWorks_Datalake_raw_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LinkedServiceDatalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "datalake-adventureworks-raw-data"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "ORDERID",
+				"type": "UTF8"
+			},
+			{
+				"name": "CUSTOMERID",
+				"type": "UTF8"
+			},
+			{
+				"name": "EMPLOYEEID",
+				"type": "UTF8"
+			},
+			{
+				"name": "ORDERDATE",
+				"type": "UTF8"
+			},
+			{
+				"name": "REQUIREDDA",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPPEDDAT",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPVIA",
+				"type": "UTF8"
+			},
+			{
+				"name": "FREIGHT",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPNAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPADDRES",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPCITY",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPREGION",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPPOSTAL",
+				"type": "UTF8"
+			},
+			{
+				"name": "SHIPCOUNTR",
+				"type": "UTF8"
+			}
+		]
+	}
+}
