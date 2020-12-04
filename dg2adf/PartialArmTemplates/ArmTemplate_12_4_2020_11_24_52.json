@@ -13,269 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Address_postgresql')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "PostgreSqlOnPrem2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "person",
-					"table": "address"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Person_postgresql')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "PostgreSqlOnPrem2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "person",
-					"table": "person"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Northwind_Orders_dbf')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LinkedServiceFileServerOnPrem",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "orders.csv"
-					},
-					"columnDelimiter": ",",
-					"encodingName": "ISO-8859-1",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ORDERID",
-						"type": "String"
-					},
-					{
-						"name": "CUSTOMERID",
-						"type": "String"
-					},
-					{
-						"name": "EMPLOYEEID",
-						"type": "String"
-					},
-					{
-						"name": "ORDERDATE",
-						"type": "String"
-					},
-					{
-						"name": "REQUIREDDA",
-						"type": "String"
-					},
-					{
-						"name": "SHIPPEDDAT",
-						"type": "String"
-					},
-					{
-						"name": "SHIPVIA",
-						"type": "String"
-					},
-					{
-						"name": "FREIGHT",
-						"type": "String"
-					},
-					{
-						"name": "SHIPNAME",
-						"type": "String"
-					},
-					{
-						"name": "SHIPADDRES",
-						"type": "String"
-					},
-					{
-						"name": "SHIPCITY",
-						"type": "String"
-					},
-					{
-						"name": "SHIPREGION",
-						"type": "String"
-					},
-					{
-						"name": "SHIPPOSTAL",
-						"type": "String"
-					},
-					{
-						"name": "SHIPCOUNTR",
-						"type": "String"
-					},
-					{
-						"name": "_NULLFLAGS",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Northwind_customers_dbf')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LinkedServiceFileServerOnPrem",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "customers.csv"
-					},
-					"columnDelimiter": ",",
-					"encodingName": "ISO-8859-1",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ORDERID",
-						"type": "String"
-					},
-					{
-						"name": "CUSTOMERID",
-						"type": "String"
-					},
-					{
-						"name": "EMPLOYEEID",
-						"type": "String"
-					},
-					{
-						"name": "ORDERDATE",
-						"type": "String"
-					},
-					{
-						"name": "REQUIREDDA",
-						"type": "String"
-					},
-					{
-						"name": "SHIPPEDDAT",
-						"type": "String"
-					},
-					{
-						"name": "SHIPVIA",
-						"type": "String"
-					},
-					{
-						"name": "FREIGHT",
-						"type": "String"
-					},
-					{
-						"name": "SHIPNAME",
-						"type": "String"
-					},
-					{
-						"name": "SHIPADDRES",
-						"type": "String"
-					},
-					{
-						"name": "SHIPCITY",
-						"type": "String"
-					},
-					{
-						"name": "SHIPREGION",
-						"type": "String"
-					},
-					{
-						"name": "SHIPPOSTAL",
-						"type": "String"
-					},
-					{
-						"name": "SHIPCOUNTR",
-						"type": "String"
-					},
-					{
-						"name": "_NULLFLAGS",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Dataflow_Northwind')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Northwind_Datalake_raw_data",
-								"type": "DatasetReference"
-							},
-							"name": "Orders"
-						},
-						{
-							"dataset": {
-								"referenceName": "Northwind_Datalake_raw_data",
-								"type": "DatasetReference"
-							},
-							"name": "Customers"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Northwind_Customer_Order_Datalake",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Join1"
-						},
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "OrdersClean"
-						},
-						{
-							"name": "CustomersClean"
-						}
-					],
-					"script": "source(output(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['orders/**']) ~> Orders\nsource(output(\n\t\tCUSTOMERID as string,\n\t\tCOMPANYNAM as string,\n\t\tCONTACTNAM as string,\n\t\tCONTACTTIT as string,\n\t\tADDRESS as string,\n\t\tCITY as string,\n\t\tREGION as string,\n\t\tPOSTALCODE as string,\n\t\tCOUNTRY as string,\n\t\tPHONE as string,\n\t\tFAX as string,\n\t\t{_NULLFLAGS} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\twildcardPaths:['customers/customers.parquet']) ~> Customers\nOrdersClean, CustomersClean join(OrdersClean@CUSTOMERID == CustomersClean@CUSTOMERID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nOrders derive(ORDERID = uuid()) ~> DerivedColumn1\nDerivedColumn1 select(mapColumn(\n\t\tORDERID,\n\t\tCUSTOMERID,\n\t\tSHIPNAME,\n\t\tSHIPADDRES,\n\t\tSHIPCITY,\n\t\tSHIPPOSTAL,\n\t\tSHIPCOUNTR\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> OrdersClean\nCustomers select(mapColumn(\n\t\tCUSTOMERID,\n\t\tCOMPANYNAM,\n\t\tCONTACTNAM,\n\t\tCONTACTTIT,\n\t\tADDRESS,\n\t\tCITY,\n\t\tPOSTALCODE,\n\t\tCOUNTRY,\n\t\tPHONE,\n\t\tFAX\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> CustomersClean\nJoin1 sink(input(\n\t\tORDERID as string,\n\t\tCUSTOMERID as string,\n\t\tEMPLOYEEID as string,\n\t\tORDERDATE as string,\n\t\tREQUIREDDA as string,\n\t\tSHIPPEDDAT as string,\n\t\tSHIPVIA as string,\n\t\tFREIGHT as string,\n\t\tSHIPNAME as string,\n\t\tSHIPADDRES as string,\n\t\tSHIPCITY as string,\n\t\tSHIPREGION as string,\n\t\tSHIPPOSTAL as string,\n\t\tSHIPCOUNTR as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tpartitionFileNames:['customerorder.parquet'],\n\ttruncate: true,\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/PipelineCopyDataFromOnPrem')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -496,15 +233,13 @@
 						"inputs": [
 							{
 								"referenceName": "Northwind_Orders_dbf",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "Northwind_Orders_Datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -647,15 +382,13 @@
 						"inputs": [
 							{
 								"referenceName": "AdventureWorks_Address_postgresql",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "AdventureWorks_Address_Datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -850,15 +583,13 @@
 						"inputs": [
 							{
 								"referenceName": "Northwind_customers_dbf",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "Northwind_Customer_Datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1045,15 +776,13 @@
 						"inputs": [
 							{
 								"referenceName": "AdventureWorks_Person_postgresql",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "AdventureWorks_Person_Datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1085,15 +814,8 @@
 						"typeProperties": {
 							"dataflow": {
 								"referenceName": "Dataflow_Northwind",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"Orders": {},
-									"Customers": {},
-									"sink1": {}
-								}
+								"type": "DataFlowReference"
 							},
-							"staging": {},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
@@ -1146,15 +868,13 @@
 						"inputs": [
 							{
 								"referenceName": "Northwind_Customer_Order_Datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "NorthwindCustomerOrder",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1202,15 +922,13 @@
 						"inputs": [
 							{
 								"referenceName": "AdventureWorks_Address_Datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "AdventureWorksAddress_SQL_DB",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1258,15 +976,13 @@
 						"inputs": [
 							{
 								"referenceName": "AdventureWorks_Person_Datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "AdventureWorksPerson_SQL_DB",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -1274,12 +990,47 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Northwind_Orders_dbf')]",
-				"[concat(variables('factoryId'), '/datasets/AdventureWorks_Address_postgresql')]",
-				"[concat(variables('factoryId'), '/datasets/Northwind_customers_dbf')]",
-				"[concat(variables('factoryId'), '/datasets/AdventureWorks_Person_postgresql')]",
-				"[concat(variables('factoryId'), '/dataflows/Dataflow_Northwind')]"
+				"[concat(variables('factoryId'), '/datasets/AdventureWorksAddress_SQL_DB')]",
+				"[concat(variables('factoryId'), '/datasets/AdventureWorksPerson_SQL_DB')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksAddress_SQL_DB')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "address"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksPerson_SQL_DB')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "person"
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

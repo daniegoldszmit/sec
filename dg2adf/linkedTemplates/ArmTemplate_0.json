@@ -719,7 +719,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorksAddress')]",
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksAddress_SQL_DB')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -740,7 +740,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorksPerson')]",
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksPerson_SQL_DB')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -753,7 +753,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "address"
+					"table": "person"
 				}
 			},
 			"dependsOn": [
