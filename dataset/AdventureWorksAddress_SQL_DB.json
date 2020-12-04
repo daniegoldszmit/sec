@@ -1,5 +1,5 @@
 {
-	"name": "AdventureWorksAddress",
+	"name": "AdventureWorksAddress_SQL_DB",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",

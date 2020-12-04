@@ -911,7 +911,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AdventureWorksAddress",
+						"referenceName": "AdventureWorksAddress_SQL_DB",
 						"type": "DatasetReference"
 					}
 				]
@@ -965,7 +965,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AdventureWorksPerson",
+						"referenceName": "AdventureWorksPerson_SQL_DB",
 						"type": "DatasetReference"
 					}
 				]
