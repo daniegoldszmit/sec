@@ -761,24 +761,84 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Address_postgresql')]",
+			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Datalake_raw_data')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "PostgreSqlOnPrem2",
+					"referenceName": "LinkedServiceDatalake",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
+				"type": "Parquet",
 				"typeProperties": {
-					"schema": "person",
-					"table": "address"
-				}
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "datalake-adventureworks-raw-data"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "ORDERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "CUSTOMERID",
+						"type": "UTF8"
+					},
+					{
+						"name": "EMPLOYEEID",
+						"type": "UTF8"
+					},
+					{
+						"name": "ORDERDATE",
+						"type": "UTF8"
+					},
+					{
+						"name": "REQUIREDDA",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPEDDAT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPVIA",
+						"type": "UTF8"
+					},
+					{
+						"name": "FREIGHT",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPNAME",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPADDRES",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCITY",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPREGION",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPPOSTAL",
+						"type": "UTF8"
+					},
+					{
+						"name": "SHIPCOUNTR",
+						"type": "UTF8"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceDatalake')]"
 			]
 		}
 	]
