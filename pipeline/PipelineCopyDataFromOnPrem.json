@@ -771,7 +771,7 @@
 				]
 			},
 			{
-				"name": "Data flow1",
+				"name": "Data wrangling Customer Orders",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -808,11 +808,11 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "Copy from staging to CustomerOrder to Azure SQL DB",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "Data wrangling Customer Orders",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -857,7 +857,115 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "NorthwindCustomerOrder",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy Address to SQL DB",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "AdventureWorks Addres to DataLake",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AdventureWorks_Address_Datalake",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AdventureWorksAddress",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy Person to SQL DB",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "AdventureWorks Person to DataLake",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AdventureWorks_Person_Datalake",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AdventureWorksPerson",
 						"type": "DatasetReference"
 					}
 				]
