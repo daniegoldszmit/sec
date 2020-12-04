@@ -327,7 +327,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"name": "[concat(parameters('factoryName'), '/NorthwindCustomerOrder')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -719,6 +719,48 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksAddress')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "address"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AdventureWorksPerson')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "address"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Address_postgresql')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -737,116 +779,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AdventureWorks_Person_postgresql')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "PostgreSqlOnPrem2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "person",
-					"table": "person"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/PostgreSqlOnPrem2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Northwind_Orders_dbf')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LinkedServiceFileServerOnPrem",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "orders.csv"
-					},
-					"columnDelimiter": ",",
-					"encodingName": "ISO-8859-1",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ORDERID",
-						"type": "String"
-					},
-					{
-						"name": "CUSTOMERID",
-						"type": "String"
-					},
-					{
-						"name": "EMPLOYEEID",
-						"type": "String"
-					},
-					{
-						"name": "ORDERDATE",
-						"type": "String"
-					},
-					{
-						"name": "REQUIREDDA",
-						"type": "String"
-					},
-					{
-						"name": "SHIPPEDDAT",
-						"type": "String"
-					},
-					{
-						"name": "SHIPVIA",
-						"type": "String"
-					},
-					{
-						"name": "FREIGHT",
-						"type": "String"
-					},
-					{
-						"name": "SHIPNAME",
-						"type": "String"
-					},
-					{
-						"name": "SHIPADDRES",
-						"type": "String"
-					},
-					{
-						"name": "SHIPCITY",
-						"type": "String"
-					},
-					{
-						"name": "SHIPREGION",
-						"type": "String"
-					},
-					{
-						"name": "SHIPPOSTAL",
-						"type": "String"
-					},
-					{
-						"name": "SHIPCOUNTR",
-						"type": "String"
-					},
-					{
-						"name": "_NULLFLAGS",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceFileServerOnPrem')]"
 			]
 		}
 	]
