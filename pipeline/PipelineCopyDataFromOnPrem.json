@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "Northwind Orders to DataLake Raw Data",
+				"description": "teste",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
