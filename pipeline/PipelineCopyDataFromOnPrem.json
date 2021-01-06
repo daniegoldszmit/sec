@@ -379,6 +379,7 @@
 			},
 			{
 				"name": "Northwind Customer  to DataLake",
+				"description": "teste",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
