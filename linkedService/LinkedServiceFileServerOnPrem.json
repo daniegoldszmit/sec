@@ -7,7 +7,7 @@
 		"typeProperties": {
 			"host": "C:\\data\\Northwind",
 			"userId": "usr_datafactory",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4NTA0MTU5Zi05YmM5LTQ1YjgtYjhmNC1kOWE3OTUyMGU4YzUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyYmU1YzQwNi01NTlhLTQzZmQtODE3ZC1lZjc5ZTU5OGE4Y2QiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime2",
