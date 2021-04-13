@@ -23,6 +23,9 @@
 		"PostgreSqlOnPrem2_connectionString": {
 			"value": ""
 		},
+		"SqlServer1_connectionString": {
+			"value": ""
+		},
 		"AzureSearch1_properties_typeProperties_url": {
 			"value": "https://dgcognitivesearch.search.windows.net"
 		},
@@ -31,9 +34,6 @@
 		},
 		"LinkedServiceFileServerOnPrem_properties_typeProperties_userId": {
 			"value": "usr_datafactory"
-		},
-		"integrationRuntime1_properties_typeProperties_linkedInfo_resourceId": {
-			"value": "/subscriptions/d0a8fb40-72fd-484a-94e2-aff6d4a1b810/resourcegroups/dg-resourcegroup/providers/Microsoft.DataFactory/factories/dgdatafactory2020/integrationruntimes/integrationRuntime1"
 		},
 		"containerUri": {
 			"value": ""
