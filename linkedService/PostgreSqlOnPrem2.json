@@ -6,7 +6,7 @@
 		"type": "PostgreSql",
 		"typeProperties": {
 			"connectionString": "host=localhost;port=5432;database=AdventureWorks;uid=postgres;encryptionmethod=0",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIzMTYwNDczYy00OGE1LTQwM2YtYjc0OC0zZjJjMjcyYjdiNjkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4ZWZjYjE2My1iOTc1LTQwOWYtYmYxYy1hYjBjYjA0YjcxNjAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime2",
